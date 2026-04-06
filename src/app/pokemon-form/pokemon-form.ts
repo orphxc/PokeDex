@@ -15,7 +15,7 @@ export class PokemonForm implements OnInit {
   pokemonForm = this.formBuilder.nonNullable.group({
     name: ['', Validators.required],
     type: ['', Validators.required],
-    level: ['', Validators.required],
+    level: [1, [Validators.required, Validators.min(1)]],
     nature: ['', Validators.required],
   })
 PokemonService = inject(Pokemon);
