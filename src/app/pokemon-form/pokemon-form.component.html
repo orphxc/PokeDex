@@ -1,0 +1,58 @@
+<div class="pokedex-container">
+    <h2>{{ editingId() ? 'Update Pokemon': 'Register Pokemon'}}</h2>
+    <form [formGroup]="pokemonForm" (ngSubmit)="onSubmit()" class="pokemon-form">
+
+        <div class="form-group">
+            <label for="name">Pokemon Name:</label>
+            <input type="text" id="name" formControlName = "name"/>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Pokemon Level:</label>
+            <input type="number" id="level" formControlName = "level"/>
+        </div>
+
+        <div class="form-group">
+            <label for="type">Pokemon Type:</label>
+            <input type="text" id="type" formControlName = "type" />
+        </div>
+
+        <div class="form-group">
+            <label for="nature">Pokemon Nature:</label>
+            <input type="text" id="nature" formControlName = "nature" />
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" [disabled] = "pokemonForm.invalid" class="btn-submit">
+            {{ editingId() ? 'Confirm Update' : 'Catch Pokemon'}}</button>
+
+            @if(editingId()){
+                <button type="button" (click)="cancelEdit()" class="btn-cancel">Cancel</button>
+            }
+        </div>
+
+
+    </form>
+</div>
+
+<hr />
+
+<h3>Current Pokedex</h3>
+<div class="pokemon-grid">
+    @for(p of pokemonService.pokemonList(); track p.id){
+        <div class="pokemon-card">
+            <div class="card-info">
+                <strong>Name: {{ p.name }}</strong>
+                <p></p>
+                <span> Level: {{ p.level }}</span>
+                <p>Type: {{ p.type }} | Nature: {{ p.nature }}</p>
+            </div>
+            <div class="card-container">
+                <button (click)="startEdit(p)"
+                class="btn-edit">Edit</button> 
+                <button (click)="deletePokemon(p._id)"
+                class="btn-delete">Release</button>                             
+            </div>            
+        </div>
+    }
+</div>
